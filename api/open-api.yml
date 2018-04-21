@@ -1,0 +1,212 @@
+openapi: 3.0.0
+
+info:
+  title: DB API
+  description: API Spec for Grinnell DB.
+  version: 1.0.0
+
+servers:
+  - url: https://appdev.grinnell.edu/api/db/v1
+    description: Scraping server.
+  - url: http://localhost:2000
+    description: Local development server.
+
+components:
+  parameters:
+    - name: un
+      in: header
+      description: username for authentication.
+      required: false
+      schema:
+        type: string
+    - name: pw
+      in: header
+      description: password for authentication.
+      required: false
+      schema:
+        type: string
+    - name: lastName
+      in: query
+      description: last name.
+      required: false
+      schema:
+        type: string
+    - name: firstName
+      in: query
+      description: first name.
+      required: false
+      schema:
+        type: string
+    - name: userName
+      in: query
+      description: user name.
+      required: false
+      schema:
+        type: string
+    - name: campusPhone
+      in: query
+      description: campus phone.
+      required: false
+      schema:
+        type: string
+    - name: campusAddress
+      in: query
+      description: campus address or P.O. box
+      required: false
+      schema:
+        type: string
+    - name: homeAddress
+      in: query
+      description: home address.
+      required: false
+      schema:
+        type: string
+    - name: classYr
+      in: query
+      description: student's class year.
+      required: false
+      schema:
+        type: string
+    - name: facStaffOffice
+      in: query
+      description: The faculty's department.
+      required: false
+      schema:
+        type: string
+    - name: major
+      in: query
+      description: student's major.
+      required: false
+      schema:
+        type: string
+    - name: concentration
+      in: query
+      description: student's concentration.
+      required: false
+      schema:
+        type: string
+    - name: sga
+      in: query
+      description: If the student is member of SGA, the student's position title.
+      required: false
+      schema:
+        type: string
+    - name: hiatus
+      in: query
+      description: Whether the student is off campus or not.
+      required: false
+      schema:
+        type: string
+
+  schemas:
+    Person:
+      type: object
+      properties:
+        firstName:
+          description: first name
+          type: string
+        lastName:
+          description: last name
+          type: string
+        nickName:
+          description: nick name
+          type: string
+          nullable: true
+        userName:
+          description: user name
+          type: string
+        classYear:
+          description: class year
+          type: integer
+          nullable: true
+        box:
+          description: mail box
+          type: string
+        email:
+          description: email
+          type: string
+          format: email
+        major:
+          description: major of student
+          type: string
+          nullable: true
+        minor:
+          description: minor/concentration of student
+          type: string
+          nullable: true
+        address:
+          description: campus address
+          type: string
+          nullable: true
+        phone:
+          description: office phone number of faculty/staff
+          type: integer
+          nullable: true
+        imgPath:
+          description: profile image url
+          type: string
+          format: uri
+          nullable: true
+        personType:
+          description: type of the person.
+          type: string
+          enum:
+            - Faculty / Staff
+            - Student
+        titles:
+          description: >
+            An array of titles for one faculty/staff.
+            Assistant Professor of Computer Science, for example.
+          items:
+            type: string
+          type: array
+          nullable: true
+        dept:
+          description: department of faculty/staff
+          type: string
+          nullable: true
+        spouse:
+          description: spouse of faculty/staff
+          type: string
+          nullable: true
+        homeAddress:
+          description: home address
+          type: string
+          nullable: true
+        office_phone:
+          description: office phone of sga
+          type: integer
+          nullable: true
+        office_email:
+          description: office email of sga
+          type: string
+          format: email
+          nullable: true
+        office_addr:
+          description: office address of sga
+          type: string
+          nullable: true
+        office_box:
+          description: office box of sga
+          type: string
+          nullable: true
+        position_name:
+          description: position name of sga
+          type: string
+          nullable: true
+        office_hours:
+          description: An array of office hours for one sga
+          items:
+            type: string
+          type: array
+          nullable: true
+
+    Error:
+      description: system error msg
+      type: object
+      properties:
+        msg:
+          type: string
+          enum:
+            - Too many results
+            - No matches

@@ -1,0 +1,7 @@
+version: "3.1"
+
+services:
+  api:
+    container_name: db-api
+    image: db-api
+    build: ./api
