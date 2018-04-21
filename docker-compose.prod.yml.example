@@ -5,4 +5,4 @@ services:
     container_name: db-api-prod
     restart: unless-stopped
     ports:
-      - "8021:80"
+      - "8080:80"
