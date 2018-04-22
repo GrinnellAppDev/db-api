@@ -13,18 +13,6 @@ servers:
 
 components:
   parameters:
-    - name: un
-      in: header
-      description: username for authentication.
-      required: false
-      schema:
-        type: string
-    - name: pw
-      in: header
-      description: password for authentication.
-      required: false
-      schema:
-        type: string
     - name: lastName
       in: query
       description: last name.
@@ -157,13 +145,15 @@ components:
           description: >
             An array of titles for one faculty/staff.
             Assistant Professor of Computer Science, for example.
+          type: array
           items:
             type: string
-          type: array
           nullable: true
         dept:
-          description: department of faculty/staff
-          type: string
+          description: department(s) of faculty/staff
+          type: array
+          items:
+            type: string
           nullable: true
         spouse:
           description: spouse of faculty/staff
@@ -200,13 +190,3 @@ components:
             type: string
           type: array
           nullable: true
-
-    Error:
-      description: system error msg
-      type: object
-      properties:
-        msg:
-          type: string
-          enum:
-            - Too many results
-            - No matches

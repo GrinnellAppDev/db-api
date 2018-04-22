@@ -24,12 +24,31 @@ module.exports = Router()
    *                type: array
    *                items:
    *                  $ref: "#/components/schemas/Person"
-   *        '400':
-   *          description: Unsuccessful search
+   *        "400":
+   *          description: The query format was invalid.
    *          content:
    *            application/json:
    *              schema:
-   *                $ref: '#/components/schemas/Error'
+   *                type: object
+   *                properties:
+   *                  message:
+   *                    type: string
+   *        "422":
+   *          description: The search made to the directory server failed.
+   *          content:
+   *            application/json:
+   *              schema:
+   *                type: object
+   *                properties:
+   *                  code:
+   *                    description: >
+   *                      If the code is "TooManyResults", the client should be
+   *                      instructed to narrow their search.
+   *                    type: string
+   *                    enum:
+   *                      - TooManyResults
+   *                  message:
+   *                    type: string
    */
   .get("/", (request, response) => {
     const LastName = "Gupta"
