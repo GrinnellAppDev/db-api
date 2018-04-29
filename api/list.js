@@ -2,7 +2,7 @@ const { Router } = require("express")
 const querystring = require("querystring")
 const tableToJson = require("tabletojson")
 
-const { validateRequest, HTTPError } = require("./util")
+const { validateRequest, HTTPError, openApiComponents } = require("./util")
 
 module.exports = Router()
   /**
@@ -16,7 +16,7 @@ module.exports = Router()
    *      parameters:
    *        $ref: "#/components/parameters"
    *      responses:
-   *        '200':
+   *        "200":
    *          description: Successful search
    *          content:
    *            application/json:
@@ -51,6 +51,15 @@ module.exports = Router()
    *                    type: string
    */
   .get("/", (request, response) => {
+    const querySchemaProps = {}
+    for (const param of openApiComponents.parameters) {
+      if (param.in === "query") {
+        querySchemaProps[param.name] = param.schema
+      }
+    }
+
+    validateRequest(request, { querySchemaProps })
+
     const LastName = "Gupta"
     const LNameSearch = ""
     const FirstName = ""
