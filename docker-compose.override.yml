@@ -1,0 +1,13 @@
+version: "3.1"
+
+services:
+  api:
+    container_name: db-api-dev
+    volumes:
+      - ./api:/app
+    environment:
+      - NODE_ENV=development
+    command: yarn start
+    ports:
+      - "2000:80"
+      - "9222:9222"
