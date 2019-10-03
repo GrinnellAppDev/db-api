@@ -111,9 +111,7 @@ module.exports = Router()
       url,
       { useFirstRowForHeadings: true, stripHtmlFromCells: false },
       function(tablesAsJson) {
-        console.log(tablesAsJson[2])
+        response.status(200).send([tablesAsJson[2]])
       }
     )
-
-    response.status(200).send([])
   })
